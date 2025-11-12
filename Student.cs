@@ -28,7 +28,7 @@ public class Student : IStudent
     // 这里基本上要求写一些结构的创建、运用等逻辑
     // 与情景关系不大，所以单纯写函数即可
     // 然而从应用分析的角度也可做一些分析
-    
+
     public string Name { get; set; }
     public int ID { get; set; }
     public Dictionary<string, Grade> Grades { get; private set; }
@@ -37,7 +37,7 @@ public class Student : IStudent
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new ArgumentException("Name cannot be null or whitespace.", nameof(name));
-        
+
         if (!int.TryParse(id, out int idValue) || idValue <= 0)
             throw new ArgumentException("ID must be a positive integer.", nameof(id));
 
@@ -109,21 +109,22 @@ public class Student : IStudent
         return GetTotalGradePoint() / totalCredit;
     }
 
-    
+
     public override string ToString()
     {   // 重写ToString方法，打印学生信息
         StringBuilder sb = new();
         sb.AppendLine($"Student: {Name}, ID: {ID}");
         if (Grades.Count == 0)
             sb.AppendLine("No grades recorded.");
-        else{
+        else
+        {
             sb.AppendLine("Courses:");
             foreach (var (course, grade) in Grades.OrderBy(g => g.Key))
                 sb.AppendLine($"  {course}: Credit={grade.Credit}, Score={grade.Score}, Grade Point={grade.GradePoint:F2}");
         }
         sb.AppendLine($"Total Credit: {GetTotalCredit()}");
         sb.AppendLine($"GPA: {GetGPA():F2}");
-        
+
         return sb.ToString();
     }
 }
